@@ -29,14 +29,15 @@ class LoginUserView(APIView):
     permission_classes = []
     
     def post(self, request):
-        email = request.data["email"]
-        password = request.data["password"]
+        email = request.data.get('email')
+        password = request.data.get('password')
         
-        user  = authenticate(email=email, password=password)
+        user = authenticate(email=email, password=password)
+        
         if user:
-            token, created = Token.objects.get_or_create(user=user)
-            return Response({"token": token.key, "id":user.id, "email":user.email}, status=status.HTTP_200_OK)
-        return Response({"message": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED)
+            token, _ = Token.objects.get_or_create(user=user)
+            return Response({"token": token.key}, status=status.HTTP_200_OK)
+        return Response({"message": "Invalid credentials"}, status=status.HTTP_400_BAD_REQUEST)
     
     
 class LogoutUserView(APIView):
