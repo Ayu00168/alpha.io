@@ -2,6 +2,7 @@
 *.egg-info
 *.pot
 *.py[co]
+.gitignore
 .tox/
 __pycache__/
 # **/migrations/
