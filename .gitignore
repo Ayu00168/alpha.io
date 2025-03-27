@@ -38,3 +38,10 @@ package-lock.json
 **.key
 
 */migrations
+*/migrations/*
+
+# Allow __init__.py files in migrations folders
+!*/migrations/__init__.py
+
+# Allow specific migration files (e.g., 0001_initial.py)
+!*/migrations/0001_initial.py
