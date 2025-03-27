@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
-
+from organisation.models import Organisation
+from utils.roles import ROLE_CHOICES
 # Create your models here.
 
 class UserManager(BaseUserManager):
@@ -35,9 +36,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
-    
+    organisation = models.ForeignKey(Organisation, on_delete=models.CASCADE, null=True, blank=True, related_name='user')
     objects = UserManager()
-    
+    roles = models.CharField(max_length=255, null=True, blank=True, choices=ROLE_CHOICES)
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name', 'phone']
     
